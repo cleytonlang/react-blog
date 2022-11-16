@@ -1,6 +1,6 @@
 import { Logo, Image, TextHeader, Content } from "./style";
-import image from "../../images/blog.svg";
-import logo from "../../images/logo.png";
+import image from "../../assets/images/blog.svg";
+import logo from "../../assets/images/logo.png";
 import { Grid, Text, Row } from "@nextui-org/react";
 export default function Header() {
   return (
