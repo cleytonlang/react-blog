@@ -1,6 +1,6 @@
-import { styled } from "@stitches/react";
+import { Stitches } from "../../assets/styles/stitches";
 
-export const ContentInput = styled("div", {
+export const ContentInput = Stitches.styled("div", {
   width: "300px",
   "& input": {
     width: "300px",

@@ -1,6 +1,6 @@
-import { styled } from "@stitches/react";
+import { Stitches } from "../../assets/styles/stitches";
 
-export const Content = styled("div", {
+export const Content = Stitches.styled("div", {
   "& div": {
     background: "#1E90FF",
   },
@@ -10,18 +10,18 @@ export const Content = styled("div", {
   },
 });
 
-export const Logo = styled("img", {
+export const Logo = Stitches.styled("img", {
   width: "60px",
   marginRight: "10px",
 });
 
-export const Image = styled("img", {
+export const Image = Stitches.styled("img", {
   width: "500px",
   minWidth: "250px",
   padding: "80px",
 });
 
-export const TextHeader = styled("div", {
+export const TextHeader = Stitches.styled("div", {
   display: "grid",
   justifySelf: "center",
   alignSelf: "center",

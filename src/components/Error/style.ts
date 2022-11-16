@@ -1,6 +1,6 @@
-import { styled } from "@stitches/react";
+import { Stitches } from "../../assets/styles/stitches";
 
-export const Content = styled("div", {
+export const Content = Stitches.styled("div", {
   backgroundColor: "gainsboro",
   borderRadius: "9999px",
   fontSize: "13px",

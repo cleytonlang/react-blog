@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
-import { Navbar, Button, Text, Container } from "@nextui-org/react";
+import { Navbar, Button, Text, Container, Grid } from "@nextui-org/react";
 import logo from "../../images/logo.png";
-import { Logo } from "./style";
+import { Logo, Footer } from "./style";
 
 type TemplateProps = {
   children: ReactElement;
@@ -31,6 +31,17 @@ export default function PrivateTemplate({ children }: TemplateProps) {
       </Navbar>
 
       <div>{children}</div>
+
+      <Container fluid>
+        <Footer>
+          <Grid.Container>
+            <Grid xs={12} justify="center" alignItems="center">
+              <Logo src={logo} />
+              QuikBlog
+            </Grid>
+          </Grid.Container> 
+        </Footer>
+      </Container>
     </Container>
   );
 }
