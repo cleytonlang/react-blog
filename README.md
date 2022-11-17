@@ -2,7 +2,7 @@
 
 # :gear: QuikBlog
 
-Aplicada criada em React (CRA) usando NextUI (UI) e Stiches (css).
+Aplicação criada em React (CRA) usando NextUI (UI) e Stiches (css).
 
 ## :gear: Descrição
 Aplicação para criação de posts simulando um blogs, com funcionalidades de curtir, visualizar e criar POST.
