@@ -16,6 +16,10 @@ export default function ListPosts() {
     setDataPosts(data);
   }
 
+  function partDescription(description: string) {
+    return description.substring(0, 300) + " ...";
+  }
+
   useEffect(() => {
     listPosts();
   }, []);
@@ -24,9 +28,9 @@ export default function ListPosts() {
     <Container>
       <h3>Posts</h3>
       {dataPosts && dataPosts.length
-        ? dataPosts.map((post: any) => (
-            <Row>
-              <Card css={{ p: "$2", marginTop: "20px" }}>
+        ? dataPosts.map((post: any, index: number) => (
+            <Row key={index}>
+              <Card isHoverable css={{ p: "$2", marginTop: "20px" }}>
                 <Card.Body>
                   <Grid.Container css={{ pl: "$6" }}>
                     <Grid xs={12}>
@@ -36,7 +40,7 @@ export default function ListPosts() {
                     </Grid>
                     <Grid xs={12}>
                       <Text css={{ color: "$accents8" }}>
-                        {post.description}
+                        {partDescription(post.description)}
                       </Text>
                     </Grid>
                   </Grid.Container>

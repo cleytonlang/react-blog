@@ -1,7 +1,7 @@
-import { Container, Grid } from "@nextui-org/react";
 import { ReactElement } from "react";
-import logo from "../../assets/images/logo.png";
-import { Content, Logo, Footer } from "./style";
+import { Content } from "./style";
+import Header from "../Header";
+import Footer from "../Footer";
 
 type TemplateProps = {
   children: ReactElement;
@@ -10,17 +10,9 @@ type TemplateProps = {
 export default function PublicTemplate({ children }: TemplateProps) {
   return (
     <Content>
+      <Header />
       {children}
-      <Container fluid>
-        <Footer>
-          <Grid.Container>
-            <Grid xs={12} justify="center" alignItems="center">
-              <Logo src={logo} />
-              QuikBlog
-            </Grid>
-          </Grid.Container>
-        </Footer>
-      </Container>
+      <Footer />
     </Content>
   );
 }

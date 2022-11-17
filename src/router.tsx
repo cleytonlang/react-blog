@@ -1,9 +1,10 @@
 import { ReactElement } from "react";
+import { Navigate } from "react-router-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PublicTemplate from "./components/Templates/public";
 import PrivateTemplate from "./components/Templates/private";
 import Home from "./modules/Home";
-import Task from "./modules/Task";
+import Posts from "./modules/Posts";
 import Error from "./components/Error";
 
 type TemplateProps = {
@@ -15,12 +16,12 @@ function PublicRoute({ children }: TemplateProps) {
 }
 
 function PrivateRoute({ children }: TemplateProps) {
-  //   const token = TokenServices.getAccessToken();
-  //   return token ? (
-  return <PrivateTemplate>{children}</PrivateTemplate>;
-  //   ) : (
-  //     <Navigate to={{ pathname: "/" }} />
-  //   );
+  const token = localStorage.getItem("token");
+  return token ? (
+    <PrivateTemplate>{children}</PrivateTemplate>
+  ) : (
+    <Navigate to="/" />
+  );
 }
 
 const RouterBase = () => (
@@ -35,18 +36,10 @@ const RouterBase = () => (
         }
       />
       <Route
-        path="/task"
+        path="/posts"
         element={
           <PrivateRoute>
-            <Task />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/users/:userId"
-        element={
-          <PrivateRoute>
-            <Task />
+            <Posts />
           </PrivateRoute>
         }
       />

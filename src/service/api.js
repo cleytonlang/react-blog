@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 import CONSTANTS from "../constants";
 
 const USER_TOKEN = localStorage.getItem("token");
@@ -15,6 +16,8 @@ const API = axios.create({
     if (status === 403) {
       localStorage.clear();
       window.location.href = "./";
+    } else if (status === 400) {
+      return false;
     } else {
       return true;
     }
@@ -41,6 +44,9 @@ API.interceptors.response.use(
     return newRes;
   },
   (error) => {
+    const message = error.response.data.message;
+    toast.error(message);
+
     const newError = { ...error };
     newError.config.metadata.endTime = new Date();
     newError.duration =

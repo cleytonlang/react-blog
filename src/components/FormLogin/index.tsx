@@ -1,50 +1,145 @@
-import { ContentInput } from "./style";
-import { Container, Grid, Text, Row, Input, Button } from "@nextui-org/react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Grid, Text, Row, Input, Button, Radio, Link } from "@nextui-org/react";
+import toast from "react-hot-toast";
+import API from "../../service/api";
+import imageToast from "../../assets/images/user_add.svg";
+import { ContentInput, Logo } from "./style";
+
 export default function FormLogin() {
-  return (
-    <Container>
-      <Row justify="center" align="center">
-        <Grid.Container gap={2}>
-          <Grid xs={12} sm={6} md={6} lg={6} xl={6}>
-            <Grid.Container gap={2}>
-              <Grid xs={12} justify="center">
-                <Text h1 size={25} weight="bold">
-                  Acesso
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [type, setType] = useState<string>("login");
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  async function login() {
+    if (email && password) {
+      const { data } = await API.post(`/authenticate`, { email, password });
+      localStorage.setItem("token", data);
+      navigate("/posts");
+    }
+  }
+
+  async function createUser() {
+    if (name && email && password) {
+      const { data } = await API.post(`/user`, { name, email, password });
+      if (data) {
+        toast(
+          (t) => (
+            <Grid.Container gap={2} justify="center">
+              <Grid xs={5} justify="center" alignItems="center">
+                <Logo src={imageToast} />
+              </Grid>
+              <Grid xs={7}>
+                <Text color="success" span size={20}>
+                  Usuário criado com sucesso. Agora você pode fazer login e
+                  criar seus posts!
                 </Text>
               </Grid>
-              <Grid xs={12} justify="center">
-                <ContentInput>
-                  <Text size={20} weight="bold">
-                    Usuário
-                  </Text>
-                  <Input placeholder="Usuário" />
-                </ContentInput>
-              </Grid>
-              <Grid xs={12} justify="center">
-                <ContentInput>
-                  <Text size={20} weight="bold">
-                    Senha
-                  </Text>
-                  <Input type="password" placeholder="Senha" />
-                </ContentInput>
-              </Grid>
-              <Grid xs={12} justify="center">
-                <Button
-                  shadow
-                  color="success"
-                  auto
-                  css={{ marginRight: "20px" }}
-                >
-                  Acessar
-                </Button>
-                <Button shadow color="primary" auto>
-                  Cadastrar
-                </Button>
-              </Grid>
             </Grid.Container>
+          ),
+          {
+            duration: 10000,
+          }
+        );
+
+        setType("login");
+      }
+    }
+  }
+
+  return (
+    <Row>
+      {!token ? (
+        <Grid.Container gap={2}>
+          <Grid xs={12}>
+            <Text span size={20} weight="bold">
+              Para postar novos conteúdos faça login ou crie um cadastro aqui.
+            </Text>
+          </Grid>
+          <Grid xs={12} justify="center">
+            <Radio.Group
+              label=""
+              defaultValue={type}
+              onChange={setType}
+              orientation="horizontal"
+            >
+              <Radio value="login" color="success" labelColor="success">
+                Login
+              </Radio>
+              <Radio value="create" color="primary" labelColor="primary">
+                Cadastrar
+              </Radio>
+            </Radio.Group>
+          </Grid>
+          <Grid xs={type === "create" ? 12 : 0} justify="center">
+            <ContentInput>
+              <Text size={20} weight="bold">
+                Nome
+              </Text>
+              <Input
+                placeholder="Nome"
+                id="name"
+                onChange={(event) => setName(event.target.value)}
+              />
+            </ContentInput>
+          </Grid>
+          <Grid xs={12} justify="center">
+            <ContentInput>
+              <Text size={20} weight="bold">
+                Email
+              </Text>
+              <Input
+                placeholder="Email"
+                id="email"
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </ContentInput>
+          </Grid>
+          <Grid xs={12} justify="center">
+            <ContentInput>
+              <Text size={20} weight="bold">
+                Senha
+              </Text>
+              <Input
+                type="password"
+                placeholder="Senha"
+                id="password"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </ContentInput>
+          </Grid>
+          <Grid xs={12} justify="center">
+            {type === "login" ? (
+              <Button
+                shadow
+                color="success"
+                auto
+                css={{ marginRight: "20px" }}
+                onPress={login}
+              >
+                Acessar
+              </Button>
+            ) : (
+              <Button shadow color="primary" auto onPress={createUser}>
+                Cadastrar
+              </Button>
+            )}
           </Grid>
         </Grid.Container>
-      </Row>
-    </Container>
+      ) : (
+        <Grid.Container>
+          <Grid xs={12}>
+            <Text span size={20} weight="bold">
+              Você já está logado no blog. <br />
+              Para editar seus posts{" "}
+              <Link onPress={() => navigate("/posts")}>click aqui</Link>
+            </Text>
+          </Grid>
+        </Grid.Container>
+      )}
+    </Row>
   );
 }
