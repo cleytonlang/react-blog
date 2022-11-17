@@ -30,3 +30,13 @@ export const BtnPosts = Stitches.styled("div", {
     backgroundColor: "#FFFFFF",
   },
 });
+
+export const Alert = Stitches.styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: "#F0F8FF",
+  border: "1px solid #eeeeee",
+  borderRadius: "10px",
+  padding: "30px",
+});

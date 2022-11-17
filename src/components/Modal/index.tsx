@@ -28,7 +28,7 @@ export default function ModalPost({
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <Text span size={18}>
+          <Text span size={16}>
             {dataModal.description}
           </Text>
         </Modal.Body>
