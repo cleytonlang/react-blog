@@ -145,7 +145,7 @@ export default function FormLogin() {
           <Grid xs={12}>
             <Text span size={20} weight="bold">
               Você já está logado no blog. <br />
-              Para editar seus posts{" "}
+              Para ver seus posts{" "}
               <Link onPress={() => navigate("/posts")}>click aqui</Link>
             </Text>
           </Grid>
