@@ -11,11 +11,10 @@ Aplicação para criação de posts simulando um blogs, com funcionalidades de c
 
 ```bash
 $ npm install
+```
 
 ## Rodando a aplicação
-
-```bash
-# projeto
+```
 $ npm run start
 ```
 ## :gear: Techs utilizadas
