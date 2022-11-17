@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Text, Row, Input, Button, Radio, Link } from "@nextui-org/react";
+import {
+  Grid,
+  Text,
+  Container,
+  Input,
+  Button,
+  Radio,
+  Link,
+} from "@nextui-org/react";
 import toast from "react-hot-toast";
 import API from "../../service/api";
 import imageToast from "../../assets/images/user_add.svg";
@@ -17,7 +25,10 @@ export default function FormLogin() {
   async function login() {
     if (email && password) {
       const { data } = await API.post(`/authenticate`, { email, password });
-      localStorage.setItem("token", data);
+      localStorage.setItem("user_id", data.user_id);
+      localStorage.setItem("name", data.name);
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("token", data.token);
       navigate("/posts");
     }
   }
@@ -51,7 +62,7 @@ export default function FormLogin() {
   }
 
   return (
-    <Row>
+    <Container>
       {!token ? (
         <Grid.Container gap={2}>
           <Grid xs={12}>
@@ -140,6 +151,6 @@ export default function FormLogin() {
           </Grid>
         </Grid.Container>
       )}
-    </Row>
+    </Container>
   );
 }

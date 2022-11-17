@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PublicTemplate from "./components/Templates/public";
 import PrivateTemplate from "./components/Templates/private";
 import Home from "./modules/Home";
-import Posts from "./modules/Posts";
+import Post from "./modules/Post";
+import User from "./modules/User";
 import Error from "./components/Error";
 
 type TemplateProps = {
@@ -39,7 +40,15 @@ const RouterBase = () => (
         path="/posts"
         element={
           <PrivateRoute>
-            <Posts />
+            <Post />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/user"
+        element={
+          <PrivateRoute>
+            <User />
           </PrivateRoute>
         }
       />

@@ -27,7 +27,8 @@ export default function Header() {
                 size={30}
                 weight="bold"
               >
-                Crie seu blog e replique seu <br />
+                Olá <span>{localStorage.getItem("name")}</span>, Crie seu blog e
+                replique seu <br />
                 conhecimento para seu público
               </Text>
             </TextHeader>

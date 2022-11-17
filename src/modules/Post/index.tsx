@@ -2,7 +2,7 @@ import { Container, Grid } from "@nextui-org/react";
 import { Content } from "./style";
 import ListPosts from "../../components/ListPosts";
 
-export default function Posts() {
+export default function Post() {
   return (
     <Content>
       <Container>

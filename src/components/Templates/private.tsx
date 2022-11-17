@@ -25,6 +25,7 @@ export default function PrivateTemplate({ children }: TemplateProps) {
           <Logo src={logo} />
         </Navbar.Brand>
         <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
+          <Navbar.Link onPress={() => navigate("/")}>Home</Navbar.Link>
           <Navbar.Link onPress={() => navigate("/posts")}>
             Meus posts
           </Navbar.Link>
