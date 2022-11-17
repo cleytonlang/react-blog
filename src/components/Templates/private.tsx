@@ -25,17 +25,17 @@ export default function PrivateTemplate({ children }: TemplateProps) {
           <Logo src={logo} />
         </Navbar.Brand>
         <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
-          <Navbar.Link onPress={() => navigate("/")}>Home</Navbar.Link>
-          <Navbar.Link onPress={() => navigate("/posts")}>
+          <Navbar.Link onClick={() => navigate("/")}>Home</Navbar.Link>
+          <Navbar.Link onClick={() => navigate("/posts")}>
             Meus posts
           </Navbar.Link>
-          <Navbar.Link onPress={() => navigate("/user")}>
+          <Navbar.Link onClick={() => navigate("/user")}>
             Meus dados
           </Navbar.Link>
         </Navbar.Content>
         <Navbar.Content>
           <Navbar.Item>
-            <Button auto flat onPress={logoff}>
+            <Button auto flat onClick={logoff}>
               Sair
             </Button>
           </Navbar.Item>

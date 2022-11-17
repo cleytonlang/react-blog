@@ -16,8 +16,11 @@ import { GrLike, GrEdit, GrFormView, GrTrash } from "react-icons/gr";
 import { BtnPosts, BtnViewPosts, Alert } from "./style";
 
 interface IPostProps {
+  id: string;
   title: string;
   description: string;
+  view?: number;
+  like?: number;
 }
 
 interface IFilterProps {
@@ -32,6 +35,9 @@ export default function ListPosts({
   setDataModal,
 }: IFilterProps) {
   const [dataPosts, setDataPosts] = useState<IPostProps[]>([]);
+  const [dataPostsWithCounters, setDataPostsWithCounters] = useState<
+    IPostProps[]
+  >([]);
   const user_id = localStorage.getItem("user_id");
 
   async function listPosts() {
@@ -41,6 +47,13 @@ export default function ListPosts({
 
   function partDescription(description: string) {
     return description.substring(0, 230) + " ...";
+  }
+
+  async function createView(id: string) {
+    await API.post(`/post/view`, {
+      post_id: id,
+    });
+    listPosts();
   }
 
   async function deletePost(id: string) {
@@ -53,6 +66,53 @@ export default function ListPosts({
     });
   }
 
+  async function countViews(ids: string[]) {
+    const { data } = await API.patch(`/post/view`, { ids });
+    let newDataPosts: IPostProps[] = dataPosts;
+    if (data.length) {
+      newDataPosts = dataPosts.map((post: IPostProps) => {
+        const filterCount = data.filter(
+          (postCount: any) => postCount.post_id === post.id
+        );
+        post.view = filterCount.length ? filterCount[0]._count.post_id : 0;
+        return post;
+      });
+      setDataPostsWithCounters(newDataPosts);
+    }
+    return newDataPosts;
+  }
+
+  async function countLikes(ids: string[], newDataPosts: IPostProps[]) {
+    const { data } = await API.patch(`/post/like`, { ids });
+    if (data.length) {
+      const newDataPostsLikes = newDataPosts.map((post: IPostProps) => {
+        const filterCount = data.filter(
+          (postCount: any) => postCount.post_id === post.id
+        );
+        post.like = filterCount.length ? filterCount[0]._count.post_id : 0;
+        return post;
+      });
+      setDataPostsWithCounters(newDataPostsLikes);
+    }
+  }
+
+  async function createLike(id: string) {
+    await API.post(`/post/like`, {
+      post_id: id,
+    });
+    listPosts();
+  }
+
+  useEffect(() => {
+    async function fetchPostsData() {
+      const ids = dataPosts.map((post: IPostProps) => post.id);
+      const newDataPosts = await countViews(ids);
+      await countLikes(ids, newDataPosts);
+    }
+
+    fetchPostsData();
+  }, [dataPosts]);
+
   useEffect(() => {
     listPosts();
   }, []);
@@ -60,17 +120,18 @@ export default function ListPosts({
   return (
     <Container>
       <h3>Posts</h3>
-      {dataPosts && dataPosts.length ? (
-        dataPosts.map((post: any, index: number) => (
+      {dataPostsWithCounters && dataPostsWithCounters.length ? (
+        dataPostsWithCounters.map((post: any, index: number) => (
           <Row key={index}>
             <Card isHoverable css={{ p: "$2", marginTop: "20px" }}>
               <Card.Body>
                 <Link
                   color="text"
                   underline
-                  onPress={() => {
+                  onClick={() => {
                     setViewPost(true);
                     setDataModal(post);
+                    createView(post.id);
                   }}
                 >
                   <Grid.Container css={{ pl: "$6" }}>
@@ -92,7 +153,7 @@ export default function ListPosts({
                 <BtnViewPosts>
                   <Badge
                     color="success"
-                    content={37}
+                    content={post.view}
                     shape="rectangle"
                     size="sm"
                   >
@@ -101,10 +162,10 @@ export default function ListPosts({
                 </BtnViewPosts>
 
                 {!filter && (
-                  <BtnPosts>
+                  <BtnPosts onClick={() => createLike(post.id)}>
                     <Badge
                       color="primary"
-                      content={5}
+                      content={post.like}
                       shape="rectangle"
                       size="sm"
                     >
@@ -154,7 +215,7 @@ export default function ListPosts({
                                   size="sm"
                                   shadow
                                   color="error"
-                                  onPress={() => deletePost(post.id)}
+                                  onClick={() => deletePost(post.id)}
                                 >
                                   Confirmar
                                 </Button>
@@ -171,7 +232,7 @@ export default function ListPosts({
           </Row>
         ))
       ) : (
-        <Alert>Nenhum post cadastrado</Alert>
+        <Alert>Nenhum post cadastrado!</Alert>
       )}
     </Container>
   );

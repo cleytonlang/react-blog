@@ -35,6 +35,7 @@ export const Stitches = createStitches({
       gray300: '#58798D',
       gray400: '#44546A',
       gray600: '#6B6B6B',
+      blue70: '#F0F8FF',
     },
     space: {
       1: getRem(10),

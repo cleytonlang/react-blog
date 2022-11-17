@@ -88,7 +88,7 @@ export default function User() {
             </ContentInput>
           </Grid>
           <Grid xs={12} justify="center">
-            <Button shadow color="primary" auto onPress={updateUser}>
+            <Button shadow color="primary" auto onClick={updateUser}>
               Alterar
             </Button>
           </Grid>

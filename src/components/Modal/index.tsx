@@ -33,7 +33,7 @@ export default function ModalPost({
           </Text>
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat color="error" onPress={() => setViewPost(false)}>
+          <Button auto flat color="error" onClick={() => setViewPost(false)}>
             Fechar post
           </Button>
         </Modal.Footer>

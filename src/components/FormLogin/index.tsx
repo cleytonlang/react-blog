@@ -29,7 +29,7 @@ export default function FormLogin() {
       localStorage.setItem("name", data.name);
       localStorage.setItem("email", data.email);
       localStorage.setItem("token", data.token);
-      navigate("/posts");
+      window.location.href = "/posts";
     }
   }
 
@@ -129,12 +129,12 @@ export default function FormLogin() {
                 color="success"
                 auto
                 css={{ marginRight: "20px" }}
-                onPress={login}
+                onClick={login}
               >
                 Acessar
               </Button>
             ) : (
-              <Button shadow color="primary" auto onPress={createUser}>
+              <Button shadow color="primary" auto onClick={createUser}>
                 Cadastrar
               </Button>
             )}
@@ -146,7 +146,7 @@ export default function FormLogin() {
             <Text span size={20} weight="bold">
               Você já está logado no blog. <br />
               Para ver seus posts{" "}
-              <Link onPress={() => navigate("/posts")}>click aqui</Link>
+              <Link onClick={() => navigate("/posts")}>click aqui</Link>
             </Text>
           </Grid>
         </Grid.Container>
