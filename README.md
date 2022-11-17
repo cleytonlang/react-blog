@@ -7,12 +7,20 @@ Aplicação criada em React (CRA) usando NextUI (UI) e Stiches (css).
 ## :gear: Descrição
 Aplicação para criação de posts simulando um blogs, com funcionalidades de curtir, visualizar e criar POST.
 
-Esta aplicação está hospedada na Vercel e o Backend na AWS.
-- Demo: <a href="https://react-blog-gules.vercel.app" target="_blank">Clique aqui</a>
+## Instalação
 
+```bash
+$ npm install
+
+## Rodando a aplicação
+
+```bash
+# projeto
+$ npm run start
+```
 ## :gear: Techs utilizadas
 
 - React JS
 - Next UI
 - Typescript
-- Stiches
+- Stitches
